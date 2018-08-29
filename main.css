@@ -1,0 +1,129 @@
+body {
+    background-color: black;
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    /* flex-direction: column; */
+}
+
+#mainWrapper {
+    /* display: inline-block; */
+    /* margin: auto; */
+    display: flex;
+    flex-direction: column;
+}
+
+#rowsWrapper {
+    display: inline-block;
+    /* background-color: yellow; */
+    margin: auto;
+}
+
+h2 {
+    display: block;
+    color: white;
+    /* background-color: purple; */
+    width: 0px;
+    margin: auto;
+}
+
+.row {
+    display: flex;
+    /* margin: auto; */
+}
+
+.cell {
+    width: 3.5vw;
+    height: 4.5vh;
+}
+
+.wall {
+    background-color: grey;
+    border: .5vh dashed lightgrey;
+    border-radius: 10px;
+    /* width: 30px; */
+    /* height: 30px; */
+}
+
+.floor {
+    /* width: 30px; */
+    /* height: 30px; */
+    border: .5vh solid rgba(193, 66, 66, 0);
+}
+
+.start {
+    background-color: green;
+    border-radius: 4px;
+}
+
+.finish {
+    background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+.box {
+    background-color: brown;
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes slideRight {
+    from {
+        margin-left: -3.5vw;
+    }
+    to {
+        margin-left: 0;
+    }
+}
+
+@keyframes slideLeft {
+    from {
+        margin-left: 3.5vw;
+    }
+    to {
+        margin-left: 0;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        margin-top: 4.5vh;
+    }
+    to {
+        margin-top: 0;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        margin-top: -4.5vh;
+    }
+    to {
+        margin-top: 0;
+    }
+}
+
+#playerIcon {
+    /* margin: 3px; */
+    width: 100%;
+    height: 100%;
+    background-color: yellow;
+    border-radius: 100px;
+    animation-duration: 500ms;
+    /* animation-name: slideRight; */
+}
+
+.slideRight {
+    animation-name: slideRight;
+}
+
+#winDiv {
+    background-color: white;
+    position: absolute;
+    top: 40vh;
+    left: 43vw;
+    border: 1px solid lightgrey;
+    padding: 25px;
+    font-size: xx-large;
+    border-radius: 20px;
+}
