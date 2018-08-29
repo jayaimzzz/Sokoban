@@ -76,9 +76,9 @@ function changePlayerLocation(Right, Down) {
     let playerNewLocationDiv = document.getElementById('cell' + cellNumber + 'row' + rowNumber)
     let direction = whatDirection(Right, Down);
     let newPlayerLocation = [cellNumber, rowNumber]
+    // canBoxMove(Right, Down);
     canTheBoxMove = true;
-    console.log(canBoxMove(Right, Down));
-    if (mapLocation !== 'W' && mapLocation !== undefined && canTheBoxMove == true) {
+    if (mapLocation !== 'W' && mapLocation !== undefined && canBoxMove(Right, Down)) {
         playerIcon.style.animationName = "slide" + direction
         let playerLocationDiv = document.getElementById('cell' + cellNumber + 'row' + rowNumber)
         playerLocationDiv.appendChild(playerIcon);
@@ -88,17 +88,27 @@ function changePlayerLocation(Right, Down) {
         moveBox(Right, Down, playerNewLocationDiv)
     }
 }
+// function isThereABoxNextToMe(Right, Down){
+//     let result = false;
+// }
 
 function canBoxMove(Right, Down){
     let result = true;
-    let newBoxLocationCell = playerLocation[0] + Right;
-    let newBoxLocationRow = playerLocation[1] + Down;
+    let newPlayerLocationCell = playerLocation[0] + Right;
+    let newPlayerLocationRow = playerLocation[1] + Down;
+    let newPlayerLocationDiv = document.getElementById('cell' + newPlayerLocationCell + 'row' + newPlayerLocationRow)
+    let newBoxLocationCell = playerLocation[0] + (2 * Right);
+    let newBoxLocationRow = playerLocation[1] + (2 * Down);
     let newBoxLocationDiv = document.getElementById('cell' + newBoxLocationCell + 'row' + newBoxLocationRow)
-    console.log(newBoxLocationDiv.childElementCount)
-    console.log(newBoxLocationDiv.className.includes('floor'))
-    if (newBoxLocationDiv.childElementCount !== 0 && !newBoxLocationDiv.className.includes('floor')) {
+    console.log('newBoxLocationDiv: ', newBoxLocationDiv)
+    console.log('newBoxLocationDiv Child element count: ' + newBoxLocationDiv.childElementCount)
+    if (newBoxLocationDiv.childElementCount !== 0 || newBoxLocationDiv.className.includes('wall')) {
         result = false;
+    }  
+    if (newPlayerLocationDiv.childElementCount == 0){
+        result = true;
     }
+    console.log(result)
     return result;
 }
 
