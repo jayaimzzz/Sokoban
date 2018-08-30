@@ -1,17 +1,35 @@
 const playerIcon = document.createElement('div')
 playerIcon.id = 'playerIcon';
 const rowsWrapper = document.getElementById("rowsWrapper");
-const map = [
-    "  WWWWW ",
-    "WWW   W ",
-    "WOSB  W ",
-    "WWW BOW ",
-    "WOWWB W ",
-    "W W O WW",
-    "WB XBBOW",
-    "W   O  W",
-    "WWWWWWWW"
-];
+
+const maps = [
+    [
+        "  WWWWW ",
+        "WWW   W ",
+        "WOSB  W ",
+        "WWW BOW ",
+        "WOWWB W ",
+        "W W O WW",
+        "WB XBBOW",
+        "W   O  W",
+        "WWWWWWWW"
+    ],[
+        "    WWWWW          ",
+        "    W   W          ",
+        "    WB  W          ",
+        "  WWW  BWW         ",
+        "  W  B B W         ",
+        "WWW W WW W   WWWWWW",
+        "W   W WW WWWWW  OOW",
+        "W B  B          OOW",
+        "WWWWW WWW WSWW  OOW",
+        "    W     WWWWWWWWW",
+        "    WWWWWWW        "
+    ],["WWW  O B S W"]
+]
+let mapNumber = 0;
+let map = maps[mapNumber];
+
 let playerLocation = [];
 var locationsOfBoxes = [];
 const listOfFinishCells = []
@@ -41,6 +59,8 @@ function createCells(row) {
         let cell = document.createElement('div');
         cell.className = 'cell';
         cell.id = "cell" + i + row.id;
+        cell.dataset.cellNumber = i;
+        cell.dataset.rowNumber = row.dataset.rowNumber
         switch (map[row.dataset.rowNumber][i]) {
             case 'W':
                 cell.className = 'wall cell';
@@ -152,7 +172,9 @@ function checkForWin() {
         let finishCell = listOfFinishCells[i];
         let finishDiv = document.getElementById(finishCell);
         if (finishDiv.childElementCount > 0) {
-            numnberOfFinishSquaresContainingBoxes++;
+            if (finishDiv.childNodes[0].classList.contains('box')) {
+                numnberOfFinishSquaresContainingBoxes++;
+            }
         }
     }
     if (numnberOfFinishSquaresContainingBoxes == listOfFinishCells.length) {
@@ -172,6 +194,30 @@ function youWon() {
 
 createRows();
 changePlayerLocation(0, 0); //game init: sets the playerIcon and mapLocation to the start position
+let resetButton = document.getElementById('resetButton')
+resetButton.onclick = function () {
+    // location.reload();
+    rowsWrapper.innerHTML = "";
+    createRows();
+    changePlayerLocation(0, 0);
+}
+let mapTwoButton = document.getElementById('mapTwoButton');
+nextLevelButton.onclick = switchMaps;
+
+function switchMaps() {
+    if (mapNumber < maps.length){
+
+        map = maps[mapNumber++];
+    } else {
+        mapNumber = 0;
+        map = maps[mapNumber];
+    }
+    map
+    rowsWrapper.innerHTML = "";
+    createRows();
+    changePlayerLocation(0, 0);
+    
+}
 
 let arrowKeyPressed = function (event) {
     switch (event.key) {

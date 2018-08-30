@@ -127,3 +127,7 @@ h2 {
     font-size: xx-large;
     border-radius: 20px;
 }
+
+#resetButton {
+    background-color: pink;
+}
