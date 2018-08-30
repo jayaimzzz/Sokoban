@@ -14,6 +14,7 @@ const map = [
 ];
 let playerLocation = [];
 var locationsOfBoxes = [];
+const listOfFinishCells = []
 
 
 function createBox(cellNumber, rowNumber) {
@@ -53,6 +54,7 @@ function createCells(row) {
                 break;
             case 'O':
                 cell.className = 'floor cell finish';
+                listOfFinishCells.push(cell.id)
                 break;
             case 'B':
                 cell.className = 'floor cell';
@@ -63,6 +65,7 @@ function createCells(row) {
                 let boxX = createBox(i, Number(row.dataset.rowNumber));
                 cell.appendChild(boxX)
                 cell.className = 'floor cell finish'
+                listOfFinishCells.push(cell.id)
                 break;
         }
         row.appendChild(cell);
@@ -82,17 +85,17 @@ function changePlayerLocation(Right, Down) {
         playerIcon.style.animationName = "slide" + direction
         let playerLocationDiv = document.getElementById('cell' + cellNumber + 'row' + rowNumber)
         playerLocationDiv.appendChild(playerIcon);
-        playerLocation = newPlayerLocation;   
+        playerLocation = newPlayerLocation;
     }
     if (playerNewLocationDiv.childElementCount > 1) {
         moveBox(Right, Down, playerNewLocationDiv)
+        if (checkForWin() == true) {
+            youWon();
+        }
     }
 }
-// function isThereABoxNextToMe(Right, Down){
-//     let result = false;
-// }
 
-function canBoxMove(Right, Down){
+function canBoxMove(Right, Down) {
     let result = true;
     let newPlayerLocationCell = playerLocation[0] + Right;
     let newPlayerLocationRow = playerLocation[1] + Down;
@@ -100,15 +103,12 @@ function canBoxMove(Right, Down){
     let newBoxLocationCell = playerLocation[0] + (2 * Right);
     let newBoxLocationRow = playerLocation[1] + (2 * Down);
     let newBoxLocationDiv = document.getElementById('cell' + newBoxLocationCell + 'row' + newBoxLocationRow)
-    console.log('newBoxLocationDiv: ', newBoxLocationDiv)
-    console.log('newBoxLocationDiv Child element count: ' + newBoxLocationDiv.childElementCount)
     if (newBoxLocationDiv.childElementCount !== 0 || newBoxLocationDiv.className.includes('wall')) {
         result = false;
-    }  
-    if (newPlayerLocationDiv.childElementCount == 0){
+    }
+    if (newPlayerLocationDiv.childElementCount == 0) {
         result = true;
     }
-    console.log(result)
     return result;
 }
 
@@ -143,6 +143,22 @@ function whatDirection(Right, Down) {
             break;
     }
     return direction;
+}
+
+function checkForWin() {
+    let result = false;
+    let numnberOfFinishSquaresContainingBoxes = 0
+    for (let i = 0; i < listOfFinishCells.length; i++) {
+        let finishCell = listOfFinishCells[i];
+        let finishDiv = document.getElementById(finishCell);
+        if (finishDiv.childElementCount > 0) {
+            numnberOfFinishSquaresContainingBoxes++;
+        }
+    }
+    if (numnberOfFinishSquaresContainingBoxes == listOfFinishCells.length) {
+        result = true;
+    }
+    return result;
 }
 
 function youWon() {
