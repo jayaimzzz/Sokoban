@@ -1,9 +1,16 @@
 const playerIcon = document.createElement('div')
 playerIcon.id = 'playerIcon';
 const rowsWrapper = document.getElementById("rowsWrapper");
+let mainWrapper = document.getElementById('mainWrapper');
 
 const maps = [
     [
+        "WWWWWWWWWWWW",
+        "WW  O     WW",
+        "WW    B   WW",
+        "WW    S   WW",
+        "WWWWWWWWWWWW"
+    ],[
         "  WWWWW ",
         "WWW   W ",
         "WOSB  W ",
@@ -25,20 +32,21 @@ const maps = [
         "WWWWW WWW WSWW  OOW",
         "    W     WWWWWWWWW",
         "    WWWWWWW        "
-    ],["WWW  O B S W"]
+    ]
 ]
 let mapNumber = 0;
 let map = maps[mapNumber];
 
 let playerLocation = [];
 var locationsOfBoxes = [];
-const listOfFinishCells = []
+let listOfFinishCells = []
 
 
 function createBox(cellNumber, rowNumber) {
     let box = document.createElement('div');
     box.className = 'box';
     box.id = "boxAtcell" + cellNumber + "row" + rowNumber;
+    box.setAttribute('src', 'images/box-01.png')
     // box.dataset.location = "boxAtrow" + rowNumber + "cell" + cellNumber;
     return box;
 }
@@ -186,38 +194,71 @@ function checkForWin() {
 function youWon() {
     let text = document.createTextNode("You won!");
     let element = document.createElement('div');
+    let breakElement = document.createElement('br');
+
     element.appendChild(text);
+    element.appendChild(breakElement);
     element.id = "winDiv"
+    let nextLevelButton = createNextLevelButton('Try the next level');
+    if (mapNumber == maps.length - 1){
+        nextLevelButton.innerHTML = "You beat the last level. Go back to the first level."
+    }
+    element.appendChild(nextLevelButton);
+    let restartButton = createResetLevelButton('Retry this level');
+    element.appendChild(restartButton)
     rowsWrapper.appendChild(element);
-    document.removeEventListener('keydown', arrowKeyPressed);
 }
 
 createRows();
 changePlayerLocation(0, 0); //game init: sets the playerIcon and mapLocation to the start position
-let resetButton = document.getElementById('resetButton')
-resetButton.onclick = function () {
-    // location.reload();
+let nextLevelButton = createNextLevelButton('Next Level');
+mainWrapper.appendChild(nextLevelButton);
+let resetLevelButton = createResetLevelButton('Restart this level');
+mainWrapper.appendChild(resetLevelButton)
+
+function resetLevel() {
     rowsWrapper.innerHTML = "";
     createRows();
     changePlayerLocation(0, 0);
 }
-let mapTwoButton = document.getElementById('mapTwoButton');
-nextLevelButton.onclick = switchMaps;
+function createNextLevelButton(buttonText){
+    let button = document.createElement('button');
+    let text = document.createTextNode(buttonText);
+    button.appendChild(text);
+    button.className = 'button'
+    button.id = 'nextLevelButton'
+    button.addEventListener('click', switchMaps)
+    return button;
+}
+
+function createResetLevelButton(buttonText){
+    let button = document.createElement('button');
+    let text = document.createTextNode(buttonText);
+    button.appendChild(text);
+    button.addEventListener('click', resetLevel)
+    return button;
+}
 
 function switchMaps() {
+    mapNumber++
     if (mapNumber < maps.length){
-
-        map = maps[mapNumber++];
+        console.log(mapNumber)
+        map = maps[mapNumber];
+        if (mapNumber == maps.length - 1){
+            nextLevelButton.innerHTML = 'Back to first level'
+        }
     } else {
         mapNumber = 0;
         map = maps[mapNumber];
+        nextLevelButton.innerHTML = 'Next level'
     }
-    map
     rowsWrapper.innerHTML = "";
+    listOfFinishCells = []
     createRows();
     changePlayerLocation(0, 0);
     
 }
+
 
 let arrowKeyPressed = function (event) {
     switch (event.key) {
@@ -237,3 +278,4 @@ let arrowKeyPressed = function (event) {
 }
 
 document.addEventListener('keydown', arrowKeyPressed);
+
