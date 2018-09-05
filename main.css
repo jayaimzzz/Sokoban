@@ -1,86 +1,9 @@
-body {
-    background-color: black;
-    display: inline-block;
-    display: flex;
-    justify-content: center;
-    /* flex-direction: column; */
+:root {
+    --cell-size: 5.5vh
 }
-
-#mainWrapper {
-    /* display: inline-block; */
-    /* margin: auto; */
-    display: flex;
-    flex-direction: column;
-}
-
-#rowsWrapper {
-    display: inline-block;
-    /* background-color: yellow; */
-    margin: auto;
-}
-
-h2 {
-    display: block;
-    color: white;
-    /* background-color: purple; */
-    width: 0px;
-    margin: auto;
-}
-
-.row {
-    display: flex;
-    /* margin: auto; */
-}
-
-.cell {
-    width: 4.5vh;
-    height: 4.5vh;
-}
-
-.wall {
-    background-color: grey;
-    border: .5vh dashed lightgrey;
-    border-radius: 10px;
-    /* width: 30px; */
-    /* height: 30px; */
-}
-
-.floor {
-    /* width: 30px; */
-    /* height: 30px; */
-    border: .5vh solid rgba(193, 66, 66, 0);
-}
-
-.start {
-    background-color: green;
-    border-radius: 4px;
-}
-
-.finish {
-    /* background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%); */
-    background-color: orange;
-    /* background-size: 20px 20px; */
-    /* background-position: 0 0, 0 10px, 10px -10px, -10px 0px; */
-}
-.box {
-    /* background-color: tan; */
-    width: 100%;
-    height: 100%;
-    
-}
-
-.boxImage {
-    width: 100%;
-    height: 100%;
-}
-
-.button {
-    background-color: white;
-}
-
 @keyframes slideRight {
     from {
-        margin-left: -3.5vw;
+        margin-left: calc(-1 * var(--cell-size));
     }
     to {
         margin-left: 0;
@@ -89,7 +12,7 @@ h2 {
 
 @keyframes slideLeft {
     from {
-        margin-left: 3.5vw;
+        margin-left: var(--cell-size);
     }
     to {
         margin-left: 0;
@@ -98,7 +21,7 @@ h2 {
 
 @keyframes slideUp {
     from {
-        margin-top: 4.5vh;
+        margin-top: var(--cell-size);
     }
     to {
         margin-top: 0;
@@ -107,28 +30,96 @@ h2 {
 
 @keyframes slideDown {
     from {
-        margin-top: -4.5vh;
+        margin-top: calc(-1 * var(--cell-size));
     }
     to {
         margin-top: 0;
     }
 }
+body {
+    background-color: black;
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+}
+
+#mainWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#rowsWrapper {
+    display: inline-block;
+    margin: auto;
+}
+
+h2 {
+    display: block;
+    color: white;
+    width: 0px;
+    margin: auto;
+}
+#instructionsText {
+    color: lightgrey;
+}
+.row {
+    display: flex;
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+}
+
+.wall {
+    background-color: grey;
+    border: .5vh dashed lightgrey;
+    border-radius: 1vh;
+}
+
+.floor {
+    border: .5vh solid rgba(193, 66, 66, 0);
+    /* z-index: -1; */
+}
+
+.finish {
+    background-color: orange;
+    border-radius: 1vh;
+    /* z-index: -1; */
+}
+
+.box {
+    position: sticky;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    animation-duration: 500ms;
+    
+}
+
+.boxImage {
+    width: 100%;
+    height: 100%;
+    /* animation-duration: 500ms; */
+}
+
+.button {
+    background-color: white;
+}
 
 #playerIcon {
-    /* margin: 3px; */
+    position: sticky;
+    z-index: 1;
     width: 100%;
     height: 100%;
     background-color: yellow;
     border-radius: 100px;
     animation-duration: 500ms;
-    /* animation-name: slideRight; */
-}
-
-.slideRight {
-    animation-name: slideRight;
 }
 
 #winDiv {
+    position: sticky;
+    z-index: 2;
     background-color: white;
     position: absolute;
     top: 40vh;
@@ -137,8 +128,4 @@ h2 {
     padding: 25px;
     font-size: xx-large;
     border-radius: 20px;
-}
-
-#resetButton {
-    background-color: pink;
 }

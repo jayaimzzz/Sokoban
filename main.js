@@ -10,7 +10,8 @@ const maps = [
         "WW    B   WW",
         "WW    S   WW",
         "WWWWWWWWWWWW"
-    ],[
+    ],
+    [
         "  WWWWW ",
         "WWW   W ",
         "WOSB  W ",
@@ -20,7 +21,8 @@ const maps = [
         "WB XBBOW",
         "W   O  W",
         "WWWWWWWW"
-    ],[
+    ],
+    [
         "    WWWWW          ",
         "    W   W          ",
         "    WB  W          ",
@@ -41,6 +43,12 @@ let playerLocation = [];
 var locationsOfBoxes = [];
 let listOfFinishCells = []
 
+function createWelcomeMat() {
+    let welcomeMatImage = document.createElement('img');
+    welcomeMatImage.setAttribute('src', 'images/door-mat-01.png');
+    welcomeMatImage.className = 'welcomeMatImage';
+    return welcomeMatImage;
+}
 
 function createBox(cellNumber, rowNumber) {
     let box = document.createElement('div');
@@ -144,8 +152,11 @@ function canBoxMove(Right, Down) {
 }
 
 function moveBox(Right, Down, currentBoxParentDiv) {
+    let direction = whatDirection(Right, Down);
+    // boxImage.style.animationName = "slide" + direction
     let location = currentBoxParentDiv.id;
     let box = document.getElementById('boxAt' + location);
+    box.style.animationName = 'slide' + direction;
     let newBoxLocationCell = playerLocation[0] + Right;
     let newBoxLocationRow = playerLocation[1] + Down;
     let newBoxLocationDiv = document.getElementById('cell' + newBoxLocationCell + 'row' + newBoxLocationRow)
@@ -203,7 +214,7 @@ function youWon() {
     element.appendChild(breakElement);
     element.id = "winDiv"
     let nextLevelButton = createNextLevelButton('Try the next level');
-    if (mapNumber == maps.length - 1){
+    if (mapNumber == maps.length - 1) {
         nextLevelButton.innerHTML = "You beat the last level. Go back to the first level."
     }
     element.appendChild(nextLevelButton);
@@ -224,7 +235,8 @@ function resetLevel() {
     createRows();
     changePlayerLocation(0, 0);
 }
-function createNextLevelButton(buttonText){
+
+function createNextLevelButton(buttonText) {
     let button = document.createElement('button');
     let text = document.createTextNode(buttonText);
     button.appendChild(text);
@@ -234,7 +246,7 @@ function createNextLevelButton(buttonText){
     return button;
 }
 
-function createResetLevelButton(buttonText){
+function createResetLevelButton(buttonText) {
     let button = document.createElement('button');
     let text = document.createTextNode(buttonText);
     button.appendChild(text);
@@ -244,10 +256,9 @@ function createResetLevelButton(buttonText){
 
 function switchMaps() {
     mapNumber++
-    if (mapNumber < maps.length){
-        console.log(mapNumber)
+    if (mapNumber < maps.length) {
         map = maps[mapNumber];
-        if (mapNumber == maps.length - 1){
+        if (mapNumber == maps.length - 1) {
             nextLevelButton.innerHTML = 'Back to first level'
         }
     } else {
@@ -259,7 +270,7 @@ function switchMaps() {
     listOfFinishCells = []
     createRows();
     changePlayerLocation(0, 0);
-    
+
 }
 
 
@@ -281,4 +292,3 @@ let arrowKeyPressed = function (event) {
 }
 
 document.addEventListener('keydown', arrowKeyPressed);
-
