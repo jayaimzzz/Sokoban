@@ -46,7 +46,10 @@ function createBox(cellNumber, rowNumber) {
     let box = document.createElement('div');
     box.className = 'box';
     box.id = "boxAtcell" + cellNumber + "row" + rowNumber;
-    box.setAttribute('src', 'images/box-01.png')
+    let image = document.createElement('img');
+    image.setAttribute('src', 'images/box-01.png')
+    image.className = "boxImage"
+    box.appendChild(image);
     // box.dataset.location = "boxAtrow" + rowNumber + "cell" + cellNumber;
     return box;
 }
